@@ -1,0 +1,8 @@
+<div class="layout">
+    <div class="header">
+        <app-header (onToggleLock)="sidebarLockToggle()"></app-header>
+    </div>
+    <div class="sidebar">
+        <app-sidebar [sidebarLock]="sidebarLock"></app-sidebar>
+    </div>
+</div>
