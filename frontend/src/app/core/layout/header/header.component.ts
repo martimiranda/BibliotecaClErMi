@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-// import { RoleService } from '../../../modules/roles/role.service';
-// import { ProfileService } from '../../../services/profile.service';
+import { RoleService } from '../../../modules/roles/role.service';
+import { ProfileService } from '../../../services/profile.service';
 import { Role } from '../../../constants/role.code';
 
 @Component({
@@ -11,13 +11,13 @@ import { Role } from '../../../constants/role.code';
     styleUrl: './header.component.css',
 })
 export class HeaderComponent {
-    // _roleService = inject(RoleService);
-    // _profileService = inject(ProfileService);
+    _roleService = inject(RoleService);
+    _profileService = inject(ProfileService);
 
     role: any;
     Role = Role;
 
     async ngOnInit() {
-        // this.role = await this._profileService.getRole();
+        this.role = await this._profileService.getRole();
     }
 }
