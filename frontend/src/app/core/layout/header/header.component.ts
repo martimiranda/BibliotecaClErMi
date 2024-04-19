@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { RoleService } from '../../../modules/roles/role.service';
-import { ProfileService } from '../../../services/profile.service';
 import { Role } from '../../../constants/role.code';
+import { RoleService } from '../../../services/role.service';
+import { ProfileService } from '../../../services/profile.service';
 
 @Component({
     selector: 'app-header',

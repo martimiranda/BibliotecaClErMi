@@ -2,11 +2,11 @@ import { Component, HostListener, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PrimeNGConfig } from 'primeng/api';
 import { MenuItem } from './sidebar.interface';
-import { RoleService } from '../../../modules/roles/role.service';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { Role } from '../../../constants/role.code';
 import { PrimeIcons } from 'primeng/api';
 import { ProfileService } from '../../../services/profile.service';
+import { RoleService } from '../../../services/role.service';
 
 @Component({
     selector: 'app-sidebar',
