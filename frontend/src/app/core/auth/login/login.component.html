@@ -1,0 +1,44 @@
+<div class="mainContent">
+    <div class="login-container">
+        <h1>Login</h1>
+        <form [formGroup]="loginForm" method="post" class="flex gap-3">
+            <div class="input">
+                <span class="flex flex-column">
+                    <label for="username" [class]="{'ng-invalid': loginError}">Usuario</label>
+                    <input pInputText formControlName="cif" name="cif" id="cif" autocomplete="username" [class]="{'ng-invalid': loginError}"/>
+                </span>
+            </div>
+                
+            <div class="input">
+                <span class="flex flex-column">
+                    <label for="password" [class]="{'ng-invalid': loginError}">Contraseña</label>
+                    <p-password
+                        formControlName="password"
+                        name="password"
+                        id="password"
+                        [toggleMask]="true"
+                        [style]="{'width':'100%', 'height':'3rem'}"
+                        [class]="{'ng-invalid': loginError}"
+                        [inputStyle]="{'width':'100%'}"
+                    ></p-password>
+                </span>
+            </div>
+            <p-button
+                label="Iniciar sesión"
+                styleClass="p-button-rounded"
+                [style]="{'width':'100%', 'margin-top':'1rem', 'background-color': '#363636'}"
+                (click)="onLogin()"
+            ></p-button>
+        </form>
+    
+        
+            <div class="error">
+                <p>
+                    @if (loginError) {
+                        {{ errorMessage }}
+                    }
+                </p>
+            </div>
+    </div>
+    
+</div>
