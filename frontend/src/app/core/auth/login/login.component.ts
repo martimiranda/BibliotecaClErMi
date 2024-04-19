@@ -4,7 +4,7 @@ import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { AuthService } from '../auth.service';
-import { ProfileService } from '../../../services/profile.service';
+import { ProfileServic } from '/../../../../services/profile.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -56,7 +56,7 @@ export class LoginComponent {
             if (response.token) {
                 const profile = await this._profileService.getSelfProfileData();
                 this._profileService.selfProfileData = profile;
-                // console.log('login.component | onLogin - profile -> ', profile);
+                console.log('login.component | onLogin - profile -> ', profile);
 
                 this._router.navigateByUrl('/');
             } else throw new Error('CIF or password are incorrect');

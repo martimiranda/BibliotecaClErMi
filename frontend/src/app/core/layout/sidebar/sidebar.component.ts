@@ -47,7 +47,7 @@ export class SidebarComponent {
     }
 
     async ngOnInit() {
-        // this.primeNgConfig.ripple = true;
+        this.primeNgConfig.ripple = true;
         this.role = await this._profileService.getRole();
 
         switch (this.role.id) {
@@ -136,27 +136,27 @@ export class SidebarComponent {
             return;
         }
 
-        // if (item.externalLink != undefined) {
-        //     this.goToExternalLink(item.externalLink);
-        // }
+        if (item.externalLink != undefined) {
+            this.goToExternalLink(item.externalLink);
+        }
     }
 
     isCurrentPage(item: MenuItem): boolean {
         if (item.routerLink) {
-            // console.log('router.url -> ', this.router.url);
-            // console.log('item.routerLink -> ', item.routerLink);
+            console.log('router.url -> ', this.router.url);
+            console.log('item.routerLink -> ', item.routerLink);
 
             return item.routerLink != '' && item.routerLink === this.router.url;
         }
         return false;
     }
 
-    // subMenuState(item: MenuItem): string {
-    //     var isExpanded = item.expanded;
-    //     if (isExpanded) {
-    //         return 'expanded';
-    //     } else return 'collapsed';
-    // }
+    subMenuState(item: MenuItem): string {
+        var isExpanded = item.expanded;
+        if (isExpanded) {
+            return 'expanded';
+        } else return 'collapsed';
+    }
 
     middleClick(e: any, item: MenuItem): void {
         if (item.routerLink == undefined) return;
