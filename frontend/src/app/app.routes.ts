@@ -12,7 +12,7 @@ export const routes: Routes = [
     {
         path: '',
         component: LayoutComponent,
-        canActivate: [JwtGuard],
+        // canActivate: [JwtGuard],
         children: [{ path: '', pathMatch: 'full', component: DashboardComponent }],
     },
     { path: '**', redirectTo: '' },

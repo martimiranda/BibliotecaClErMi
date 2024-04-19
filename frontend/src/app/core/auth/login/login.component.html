@@ -3,14 +3,14 @@
         <h1>Login</h1>
         <form [formGroup]="loginForm" method="post" class="flex gap-3">
             <div class="input">
-                <span class="flex flex-column">
+                <span class="flex flex-col">
                     <label for="username" [class]="{'ng-invalid': loginError}">Usuario</label>
                     <input pInputText formControlName="cif" name="cif" id="cif" autocomplete="username" [class]="{'ng-invalid': loginError}"/>
                 </span>
             </div>
                 
             <div class="input">
-                <span class="flex flex-column">
+                <span class="flex flex-col">
                     <label for="password" [class]="{'ng-invalid': loginError}">Contraseña</label>
                     <p-password
                         formControlName="password"
