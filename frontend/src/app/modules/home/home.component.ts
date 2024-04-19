@@ -6,6 +6,7 @@ import { ToastModule } from 'primeng/toast';
 import { MenuModule } from 'primeng/menu';
 import { RouterLink } from '@angular/router';
 import { MenuItem, MessageService } from 'primeng/api';
+import { LoginComponent } from '../../core/auth/login/login.component';
 
 interface AutoCompleteCompleteEvent {
   originalEvent: Event;
@@ -21,7 +22,8 @@ interface AutoCompleteCompleteEvent {
             FormsModule,
             MenuModule,
             RouterLink,
-            ToastModule
+            ToastModule,
+            LoginComponent
           ],
   providers: [MessageService],
   templateUrl: './home.component.html',
