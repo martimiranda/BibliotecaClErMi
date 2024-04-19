@@ -1,9 +1,4 @@
-import {
-    HttpEvent,
-    HttpHandler,
-    HttpInterceptor,
-    HttpRequest,
-} from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable, Injector, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -21,10 +16,7 @@ export class JwtInterceptor implements HttpInterceptor {
     refreshInProgress = false;
     secondsUntillRefresh = 3600; // 1h
 
-    intercept(
-        req: HttpRequest<any>,
-        next: HttpHandler
-    ): Observable<HttpEvent<any>> {
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const authService = this.injector.get(AuthService);
 
         // Skip jwt injection on foreign calls and auth calls
@@ -41,10 +33,7 @@ export class JwtInterceptor implements HttpInterceptor {
                     const now = Math.floor(Date.now() / 1000); // timestamp in seconds
                     const iat = this.jwtHelper.decodeToken(token).iat; // timestamp in seconds that the token was issued at
 
-                    if (
-                        !this.refreshInProgress &&
-                        iat < now - this.secondsUntillRefresh
-                    ) {
+                    if (!this.refreshInProgress && iat < now - this.secondsUntillRefresh) {
                         this.refreshInProgress = true;
                         authService
                             .refreshToken()
@@ -54,7 +43,7 @@ export class JwtInterceptor implements HttpInterceptor {
                 }
             }
         } catch (error) {
-            this._router.parseUrl('/login');
+            this._router.navigateByUrl('/login');
         }
 
         const newReq = req.clone({
