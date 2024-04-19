@@ -1,14 +1,5 @@
 import { Component, inject } from '@angular/core';
-import {
-    AbstractControl,
-    FormControl,
-    FormGroup,
-    FormsModule,
-    ValidationErrors,
-    ValidatorFn,
-    Validators,
-    ReactiveFormsModule,
-} from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, FormsModule, ValidationErrors, ValidatorFn, Validators, ReactiveFormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -19,13 +10,7 @@ import { Router } from '@angular/router';
 @Component({
     selector: 'app-login',
     standalone: true,
-    imports: [
-        FormsModule,
-        PasswordModule,
-        ButtonModule,
-        InputTextModule,
-        ReactiveFormsModule,
-    ],
+    imports: [FormsModule, PasswordModule, ButtonModule, InputTextModule, ReactiveFormsModule],
     templateUrl: './login.component.html',
     styleUrl: './login.component.css',
 })
@@ -43,15 +28,8 @@ export class LoginComponent {
 
     ngOnInit(): void {
         this.loginForm = new FormGroup({
-            cif: new FormControl('', [
-                Validators.required,
-                Validators.minLength(9),
-                LoginComponent.isValidCIF(),
-            ]),
-            password: new FormControl('', [
-                Validators.required,
-                Validators.minLength(4),
-            ]),
+            cif: new FormControl('', [Validators.required, Validators.minLength(9), LoginComponent.isValidCIF()]),
+            password: new FormControl('', [Validators.required, Validators.minLength(4)]),
         });
     }
 
@@ -60,8 +38,7 @@ export class LoginComponent {
             const keys = Object.keys(this.loginForm.controls);
 
             for (const key of keys) {
-                const controlErrors: ValidationErrors | null =
-                    this.loginForm.get(key)!.errors;
+                const controlErrors: ValidationErrors | null = this.loginForm.get(key)!.errors;
                 if (!controlErrors) continue;
                 const error = Object.keys(controlErrors)[0];
                 // TO DO, REPLACE DEFAULT ALERT WHEN CUSTOM ALERTS ARE AVAILABLE
@@ -74,10 +51,7 @@ export class LoginComponent {
         }
 
         try {
-            const response = await this._authService.login(
-                this.loginForm.get('cif')?.value,
-                this.loginForm.get('password')?.value
-            );
+            const response = await this._authService.login(this.loginForm.get('cif')?.value, this.loginForm.get('password')?.value);
 
             if (response.token) {
                 const profile = await this._profileService.getSelfProfileData();
@@ -129,12 +103,8 @@ export class LoginComponent {
                 }
             }
 
-            var control_digit =
-                10 - parseInt((even_sum + odd_sum).toString().slice(-1), 10);
-            var control_letter = 'JABCDEFGHI'.substring(
-                control_digit,
-                control_digit + 1
-            );
+            var control_digit = 10 - parseInt((even_sum + odd_sum).toString().slice(-1), 10);
+            var control_letter = 'JABCDEFGHI'.substring(control_digit, control_digit + 1);
 
             var isValid = false;
             if (letter.match(/[ABEH]/)) {
@@ -142,9 +112,7 @@ export class LoginComponent {
             } else if (letter.match(/[KPQS]/)) {
                 isValid = controlValue === control_letter;
             } else {
-                isValid =
-                    controlValue === control_digit.toString() ||
-                    controlValue === control_letter;
+                isValid = controlValue === control_digit.toString() || controlValue === control_letter;
             }
 
             return isValid ? null : { invalidCIF: true };
