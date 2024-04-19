@@ -32,7 +32,7 @@ export class ProfileService {
             const response: any = await firstValueFrom(
                 this.http.get(`${this.baseUrl}/user/userDetails`, {
                     observe: 'response',
-                })
+                }),
             );
 
             this.selfProfileData = response.body.userDetails;
@@ -53,6 +53,11 @@ export class ProfileService {
     async getRole() {
         if (!this.selfProfileData) await this.getSelfProfileData();
         return this.selfProfileData.role;
+    }
+
+    async getUserID() {
+        if (!this.selfProfileData) await this.getSelfProfileData();
+        return this.selfProfileData.id;
     }
 
     logout() {
