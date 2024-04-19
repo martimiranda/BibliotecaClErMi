@@ -13,7 +13,7 @@ import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { AuthService } from '../auth.service';
-import { ProfileService } from '../../../services/profile.service';
+// import { ProfileServic } from '/../../../../services/profile.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -31,7 +31,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
     private _authService = inject(AuthService);
-    private _profileService = inject(ProfileService);
+    // private _profileService = inject(ProfileService);
     private _router = inject(Router);
 
     cif: string = '';
@@ -80,8 +80,8 @@ export class LoginComponent {
             );
 
             if (response.token) {
-                const profile = await this._profileService.getSelfProfileData();
-                this._profileService.selfProfileData = profile;
+                // const profile = await this._profileService.getSelfProfileData();
+                // this._profileService.selfProfileData = profile;
                 // console.log('login.component | onLogin - profile -> ', profile);
 
                 this._router.navigateByUrl('/');
