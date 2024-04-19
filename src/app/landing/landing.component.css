@@ -1,0 +1,59 @@
+header {
+    background-image: url("/assets/imgs/background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    padding: 300px 0;
+    box-shadow: 1px 1px 10px #3c3c3c;
+}
+
+
+.bentoBox {
+    display: flex;
+    flex-direction: column;
+    padding: 70px 40px;
+    margin-bottom: 20px;
+    background-color: rgba(221, 221, 220, 0.3);
+    border-radius: 12px;
+    align-items: flex-start;
+    justify-content: center;
+    box-shadow: 2px 8px 20px #706f6f76;
+    gap: 40px;
+}
+
+.img3D {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    margin-bottom: -200px;
+}
+
+.contrasenyaOblidada:hover {
+    transition-duration: 1s;
+    color: #59B468;
+    cursor: pointer;
+}
+
+:host ::ng-deep  .speeddial-linear-demo .p-speeddial-direction-up .p-speeddial-direction-right {
+    right: 0;
+    top: calc(50% - 2rem);
+}
+
+:host ::ng-deep a.p-ripple.p-element.p-speeddial-action {
+    background-color: #59B468;
+    color: white;
+}
+
+:host ::ng-deep button.p-element.p-ripple.p-button-icon-only.p-speeddial-button.p-button-rounded.p-speeddial-rotate.undefined.p-button.p-component {
+    width: 10px;
+    height: 10px;
+    justify-content: center;
+    background-color: transparent;
+    color: white;
+}
+
+:host ::ng-deep button.p-element.p-ripple.p-button-icon-only.p-speeddial-button.p-button-rounded.p-speeddial-rotate.undefined.p-button.p-component:focus,
+:host ::ng-deep button.p-element.p-ripple.p-button-icon-only.p-speeddial-button.p-button-rounded.p-speeddial-rotate.undefined.p-button.p-component:focus-within {
+    border: none;
+    box-shadow: none;
+}
