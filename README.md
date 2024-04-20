@@ -1,4 +1,4 @@
-# ⭐ BiblIETI
+# 📚 BiblIETI
 La pàgina web oficial de la biblioteca IES Esteve Terradas.
 
 ## Tecnologies
