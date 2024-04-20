@@ -9,7 +9,17 @@
     background-attachment: fixed;
 }
 
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .bentoBox {
+    flex-grow: 1;
+    align-self: stretch;
+    width: 100%;
+    max-width: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;

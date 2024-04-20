@@ -51,3 +51,8 @@ p {
     font-weight: 400;
     color: #556958;
 }
+
+label {
+    font-size: 14px;
+    font-weight: 400;
+}
