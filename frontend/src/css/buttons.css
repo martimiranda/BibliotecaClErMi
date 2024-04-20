@@ -1,3 +1,4 @@
+
 /* BOTÓN PRINCIPAL (fill) */
 .p-button-fill {
     background-color: #59B468;
@@ -64,8 +65,8 @@
 
 /* BOTONES ROJOS */
 .p-button-danger {
-    background-color: #E03131;
-    border: 1px solid #E03131;
+    background-color: #e02222;
+    border: 1px solid #e02222;
     border-radius: 14px;
     color: white;
     transition-duration: 1s;
@@ -73,20 +74,20 @@
 
 .p-button-danger:hover {
     transition-duration: 1s;
-    background-color: #861f1f;
-    border-color: #861f1f;
+    background-color: #E03131;
+    border-color: #E03131;
 }
 
 .p-button-dangeroutlined {
     background-color: white;
-    border: 1px solid #E03131;
+    border: 1px solid #e02222;
     border-radius: 14px;
-    color: #E03131;
+    color: #e02222;
     transition-duration: 1s;
 }
 
 .p-button-dangeroutlined:hover {
     transition-duration: 1s;
-    border-color: #861f1f;
-    color: #861f1f;
+    border-color: #E03131;
+    color: #E03131;
 }
