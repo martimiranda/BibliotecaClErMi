@@ -23,7 +23,7 @@ export class LoginComponent {
     password: string = '';
 
     loginError: boolean = false;
-    errorMessage: string = 'El usuario o la contraseña son incorrectos';
+    errorMessage: string = "L'usuari o la contrasenya són incorrectes.";
     loginForm!: FormGroup;
 
     ngOnInit(): void {
@@ -44,7 +44,7 @@ export class LoginComponent {
                 // TO DO, REPLACE DEFAULT ALERT WHEN CUSTOM ALERTS ARE AVAILABLE
                 if (error) {
                     this.loginError = true;
-                    this.errorMessage = 'usuario o contraseña inválido';
+                    this.errorMessage = "L'usuari o la contrasenya són incorrectes.";
                     return;
                 }
             }
