@@ -55,3 +55,10 @@ label.ng-invalid {
     display: flex;
     justify-content: center;
 }
+
+:host::ng-deep .p-element .p-icon-wrapper {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
