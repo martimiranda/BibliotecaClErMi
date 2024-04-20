@@ -3,6 +3,7 @@ import { LoginComponent } from './core/auth/login/login.component';
 import { LayoutComponent } from './core/layout/layout.component';
 import { JwtGuard } from './guards/jwt.guard';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
+import { HomeComponent } from './modules/home/home.component';
 
 export const routes: Routes = [
     {
@@ -13,9 +14,10 @@ export const routes: Routes = [
         path: '',
         component: LayoutComponent,
         // canActivate: [JwtGuard],
-        children: [{ path: '', pathMatch: 'full', component: DashboardComponent }],
+        children: [
+            { path: '', pathMatch: 'full', component: HomeComponent },
+            { path: 'dashboard', pathMatch: 'full', component: DashboardComponent },
+        ],
     },
     { path: '**', redirectTo: '' },
-
-    {path: 'dashboard', component: DashboardComponent}
 ];

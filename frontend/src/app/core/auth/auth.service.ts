@@ -21,7 +21,7 @@ export class AuthService {
                 this._http.post(`${this.baseUrl}/auth/login`, body, {
                     observe: 'response',
                     withCredentials: true,
-                })
+                }),
             );
             response = response.body;
 
@@ -38,7 +38,7 @@ export class AuthService {
             const response = await firstValueFrom(
                 this._http.get(`${this.baseUrl}/auth/verify`, {
                     observe: 'response',
-                })
+                }),
             );
             return response ? true : false;
         } catch (error: any) {
@@ -53,9 +53,7 @@ export class AuthService {
 
     async refreshToken() {
         try {
-            let response: any = await firstValueFrom(
-                this._http.get(`${this.baseUrl}/auth/refresh`)
-            );
+            let response: any = await firstValueFrom(this._http.get(`${this.baseUrl}/auth/refresh`));
             if (!response.token) {
                 throw new Error('Token is undefined or null');
             }

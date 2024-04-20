@@ -1,11 +1,13 @@
 import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { AbstractControl, FormControl, FormGroup, FormsModule, ValidationErrors, ValidatorFn, Validators, ReactiveFormsModule } from '@angular/forms';
+
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+
 import { AuthService } from '../auth.service';
-import { ProfileServic } from '/../../../../services/profile.service';
-import { Router } from '@angular/router';
+import { ProfileService } from '../../../services/profile.service';
 
 @Component({
     selector: 'app-login',

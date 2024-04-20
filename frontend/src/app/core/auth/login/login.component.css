@@ -24,3 +24,31 @@ input {
     height: 3rem;
     padding: 0.5rem;
 }
+
+input.p-inputtext.ng-dirty.ng-invalid {
+    border-color: #e24c4c;
+}
+
+.error {
+    height: 52px;
+}
+
+.error p {
+    color: red;
+}
+
+label.ng-invalid {
+    color: #e24c4c;
+}
+
+:host::ng-deep .p-button .p-button-label {
+    display: flex;
+    justify-content: center;
+}
+
+:host::ng-deep .p-element .p-icon-wrapper {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
