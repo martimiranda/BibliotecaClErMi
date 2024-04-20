@@ -25,7 +25,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
+              "src/css/styles.css",
               "./node_modules/primeicons/primeicons.css",
               "./node_modules/primeng/resources/themes/saga-blue/theme.css"
             ],
@@ -86,7 +86,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/css/styles.css"
             ],
             "scripts": []
           }
