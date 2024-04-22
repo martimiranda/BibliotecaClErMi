@@ -1,8 +1,8 @@
-.sidebar-lock{
+.sidebar-lock {
     width: 16rem !important;
 }
 
-.sidebar-expanded{
+.sidebar-expanded {
     margin-left: 16rem !important;
 }
 
@@ -28,7 +28,6 @@ div.sidebar > div.logo > img {
     overflow-x: hidden;
     width: 100%;
     transition: all 0.5s ease-in-out 0s;
-    background-color: #EFF5F6;
 }
 
 .sidebar {
@@ -152,7 +151,7 @@ div.sign-out {
         width: 0px;
         padding: 0px;
     }
-    .sidebar-lock{
+    .sidebar-lock {
         width: 100% !important;
     }
     .sidebar:hover {
