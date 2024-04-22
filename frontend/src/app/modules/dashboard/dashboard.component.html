@@ -8,6 +8,7 @@
 </div>
 
 <!-- Admin -->
+<!-- <div *ngIf="userRole === 'Admin'" class="flex flex-row px-10 mb-40 justify-center items-center gap-x-20 w-full"> -->
 <div class="flex flex-row px-10 mb-40 justify-center items-center gap-x-20 w-full">
     <div class="confCompteContainer w-1/2">
         <div class="flex flex-row items-center">
@@ -18,7 +19,6 @@
                 <p>Administrador</p>
             </div>
         </div>
-
 
         <div class="edicioCompteContainer">
             <div class="flex flex-row gap-x-20 justify-between items-center">
@@ -52,9 +52,7 @@
         <h2>Estat del compte</h2>
         <div>
             <p-button severity="dangeroutlined">Tancar sessió</p-button>
-
             <hr>
-
             <div class="flex flex-row items-center gap-x-4">
                 <p-button severity="min">Cancelar</p-button>
                 <p-button severity="fill-rounded">Guardar canvis</p-button>
@@ -64,17 +62,16 @@
 </div>
 
 <!-- Usuario -->
+<!-- <div *ngIf="userRole === 'Usuario'" class="flex flex-row px-10 mb-40 justify-center items-center gap-x-20 w-full"> -->
 <div class="flex flex-row px-10 mb-40 justify-center items-center gap-x-20 w-full">
     <div class="confCompteContainer w-1/2">
         <div class="flex flex-row items-center">
             <p-avatar label="P" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>
-
             <div class="flex flex-col items-start">
                 <p class="font-bold">IETI</p>
                 <p>Usuari</p>
             </div>
         </div>
-
 
         <div class="edicioCompteContainer">
             <div class="flex flex-row gap-x-20 justify-between items-center">
@@ -100,7 +97,6 @@
                 </div>
                 <p-button severity="fill">Editar</p-button>
             </div>
-
         </div>
     </div>
 
@@ -108,9 +104,7 @@
         <h2>Estat del compte</h2>
         <div>
             <p-button severity="dangeroutlined">Tancar sessió</p-button>
-
             <hr>
-
             <div class="flex flex-row items-center gap-x-4">
                 <p-button severity="min">Cancelar</p-button>
                 <p-button severity="fill-rounded">Guardar canvis</p-button>
