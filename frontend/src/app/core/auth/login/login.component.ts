@@ -3,20 +3,28 @@ import { AbstractControl, FormControl, FormGroup, FormsModule, ValidationErrors,
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputOtpModule } from 'primeng/inputotp';
 import { AuthService } from '../auth.service';
-import { ProfileServic } from '/../../../../services/profile.service';
+// import { ProfileServic } from '/../../../../services/profile.service';
 import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-login',
     standalone: true,
-    imports: [FormsModule, PasswordModule, ButtonModule, InputTextModule, ReactiveFormsModule],
+    imports: [
+                FormsModule,
+                PasswordModule,
+                ButtonModule,
+                InputTextModule,
+                ReactiveFormsModule,
+                InputOtpModule
+            ],
     templateUrl: './login.component.html',
     styleUrl: './login.component.css',
 })
 export class LoginComponent {
     private _authService = inject(AuthService);
-    private _profileService = inject(ProfileService);
+    // private _profileService = inject(ProfileService);
     private _router = inject(Router);
 
     cif: string = '';
@@ -54,9 +62,9 @@ export class LoginComponent {
             const response = await this._authService.login(this.loginForm.get('cif')?.value, this.loginForm.get('password')?.value);
 
             if (response.token) {
-                const profile = await this._profileService.getSelfProfileData();
-                this._profileService.selfProfileData = profile;
-                console.log('login.component | onLogin - profile -> ', profile);
+                // const profile = await this._profileService.getSelfProfileData();
+                // this._profileService.selfProfileData = profile;
+                // console.log('login.component | onLogin - profile -> ', profile);
 
                 this._router.navigateByUrl('/');
             } else throw new Error('CIF or password are incorrect');
@@ -117,5 +125,12 @@ export class LoginComponent {
 
             return isValid ? null : { invalidCIF: true };
         };
+    }
+
+    // ENVIAR CODI
+    value : any
+    popupVisible = false;
+    togglePopup() {
+        this.popupVisible = !this.popupVisible;
     }
 }
