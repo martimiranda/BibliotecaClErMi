@@ -4,7 +4,7 @@ from faker import Faker
 from django.contrib.auth.models import User
 from biblioApp.models import Role, Item, Book, CD, Dispositive, ItemCopy, Reservation, Loan, Request, Log
 
-fake = Faker()
+fake = Faker('es_ES')
 
 
 def create_users(num_users=10):
@@ -29,14 +29,16 @@ def create_users(num_users=10):
         surname = fake.last_name()
         surname2 = fake.last_name() if random.choice([True, False]) else None
         username = fake.user_name()
+        dni_digits = ''.join([str(random.randint(0, 9)) for _ in range(8)])
+        dni_letter = 'TRWAGMYFPDXBNJZSQVHLCKE'[int(dni_digits) % 23]
+        dni = dni_digits + dni_letter
         email = fake.email()
         password = fake.password()
         role = random.choice(roles)
         center = random.choice(centers)
         cycle = random.choice(cycles)
         
-        user = User.objects.create_user(username=username, email=email, password=password)
-        User.objects.create(user=user, name=name, surname=surname, surname2=surname2, role=role, date_of_birth=fake.date_of_birth(), center=center, cycle=cycle, image=None)
+        User.objects.create(username=username, email=email, password=password,dni=dni, name=name, surname=surname, surname2=surname2, role=role, date_of_birth=fake.date_of_birth(), center=center, cycle=cycle, image=None)
 
 
 

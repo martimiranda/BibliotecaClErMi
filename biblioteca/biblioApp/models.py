@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import User
 
 class Role(models.Model):
     name = models.CharField(max_length=50 , verbose_name="Nom del rol")
@@ -11,32 +11,31 @@ class Role(models.Model):
     def __str__(self):
         return self.name
 
-class User(AbstractBaseUser):
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    role = models.ForeignKey(Role, on_delete=models.CASCADE)
+    date_of_birth = models.DateField()
+    center = models.CharField(max_length=100)
+    cycle = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='user_images/', blank=True, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE , verbose_name="Usuari")
     name = models.CharField(max_length=100 , verbose_name="Nom")
     surname = models.CharField(max_length=100 , verbose_name="Cognom")
     surname2 = models.CharField(max_length=100 , verbose_name="Segon cognom (opcional)", blank=True, null=True)
+    dni =  models.CharField(max_length=9, unique=True,blank=True, null=True, verbose_name='DNI')
     role = models.ForeignKey(Role, on_delete=models.CASCADE, verbose_name="Rol d'usuari")
     date_of_birth = models.DateField(verbose_name="Data de naixement")
     center = models.CharField(max_length=100 , verbose_name="Centre al que pertany")
     cycle = models.CharField(max_length=100 , verbose_name="Curs al que pertany")
     image = models.ImageField(upload_to='user_images/', blank=True, null=True , verbose_name="Imatge de perfil")
-    dni = models.CharField(max_length=9, unique=True, verbose_name="DNI")
-    email = models.EmailField(unique=True, verbose_name="Correu electrònic")
 
-    USERNAME_FIELD = 'dni'
-    REQUIRED_FIELDS = ['name', 'surname', 'date_of_birth', 'email', 'center', 'cycle']
+    class Meta:
+        verbose_name = "Perfil d'usuari"
+        verbose_name_plural = "Perfils d'usuari"
 
-    def get_full_name(self):
-        if self.surname2 is None:
-            return f'{self.name} {self.surname}'
-        else:
-            return f'{self.name} {self.surname} {self.surname2}'
+    def __str__(self):
+        return self.user.username
 
-    def get_short_name(self):
-        return self.name
-    
-    def email_user(self):
-        return self.email
 
 
 
@@ -106,7 +105,7 @@ class ItemCopy(models.Model):
  
 
 class Reservation(models.Model): #RESERVA
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Usuari")
+    user = models.ForeignKey(UserP, on_delete=models.CASCADE, verbose_name="Usuari")
     copy = models.ForeignKey(ItemCopy, on_delete=models.CASCADE, verbose_name="Exemplar")
     reservation_date = models.DateField(auto_now_add=True , verbose_name="Data de la reserva")
 
