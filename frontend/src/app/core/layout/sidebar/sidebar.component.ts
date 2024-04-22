@@ -26,7 +26,7 @@ export class SidebarComponent {
     configurationMenuItems!: MenuItem[];
 
     signOut = {
-        label: 'Salir',
+        label: 'Sortir',
         routerLink: '*',
         icon: PrimeIcons.SIGN_OUT,
         hidden: true,
@@ -47,21 +47,27 @@ export class SidebarComponent {
     }
 
     async ngOnInit() {
-        this.primeNgConfig.ripple = true;
+        // this.primeNgConfig.ripple = true;
         this.role = await this._profileService.getRole();
 
         switch (this.role.id) {
             case Role.ADMIN:
                 this.menuItems = [
                     {
-                        label: 'Inicio',
+                        label: 'Inici',
                         routerLink: '/',
                         icon: PrimeIcons.HOME,
                         hidden: true,
                     },
                     {
-                        label: 'Resumen de pedidos',
-                        routerLink: '/orderSummary',
+                        label: 'Dashboard',
+                        routerLink: '/dashboard',
+                        icon: PrimeIcons.FILE,
+                        hidden: true,
+                    },
+                    {
+                        label: 'Llibres',
+                        routerLink: '/cercar-llibres',
                         icon: PrimeIcons.FILE,
                         hidden: true,
                     },
@@ -87,39 +93,22 @@ export class SidebarComponent {
                     },
                 ];
                 break;
+
             case Role.CLIENT:
                 this.menuItems = [
                     {
-                        label: 'Inicio',
+                        label: 'Inici',
                         routerLink: '/',
                         icon: PrimeIcons.HOME,
                         hidden: true,
                     },
                     {
-                        label: 'Nuevo pedido',
-                        routerLink: '/newOrder',
-                        tooltip: 'Les teves coumitats',
+                        label: 'Dashboard',
+                        routerLink: '/dashboard',
+                        tooltip: 'El teu compte',
                         icon: PrimeIcons.BOX,
                         hidden: true,
-                    },
-                    {
-                        label: 'Resumen pedidos',
-                        routerLink: '/orderSummary',
-                        icon: PrimeIcons.FILE,
-                        hidden: true,
-                    },
-                    {
-                        label: 'Ir a la tienda online',
-                        routerLink: '*',
-                        icon: PrimeIcons.GLOBE,
-                        hidden: true,
-                    },
-                    {
-                        label: 'Datos personales',
-                        routerLink: '/myData',
-                        icon: PrimeIcons.USER,
-                        hidden: true,
-                    },
+                    }
                 ];
                 break;
         }
@@ -137,7 +126,7 @@ export class SidebarComponent {
         }
 
         if (item.externalLink != undefined) {
-            this.goToExternalLink(item.externalLink);
+            // this.goToExternalLink(item.externalLink);
         }
     }
 
