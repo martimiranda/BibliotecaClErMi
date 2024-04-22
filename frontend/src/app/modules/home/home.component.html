@@ -21,7 +21,7 @@
                         <div class="card flex justify-content-center">
                             <p-autoComplete [(ngModel)]="selectedItem" (completeMethod)="search($event)" minLength="3"></p-autoComplete>
                         </div>
-                        <p-button severity="icon">
+                        <p-button severity="icon" [routerLink]="['/cercar-llibre']">
                             <i class="pi pi-search"></i>
                         </p-button>
                     </div>
