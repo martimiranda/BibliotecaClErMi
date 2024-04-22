@@ -13,12 +13,12 @@ export class AuthService {
 
     private baseUrl: string = environment.apiUrl;
 
-    async login(dni: string, password: string) {
-        const body = { dni: dni, password: password };
+    async login(email: string, password: string) {
+        const body = { email: email, password: password };
 
         try {
             let response: any = await firstValueFrom(
-                this._http.post(`${this.baseUrl}/auth/login`, body, {
+                this._http.post(`${this.baseUrl}/auth/login/`, body, {
                     observe: 'response',
                     withCredentials: true,
                 }),
