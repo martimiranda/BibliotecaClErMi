@@ -13,8 +13,8 @@ export class AuthService {
 
     private baseUrl: string = environment.apiUrl;
 
-    async login(cif: string, password: string) {
-        const body = { companyCIF: cif, password: password };
+    async login(dni: string, password: string) {
+        const body = { dni: dni, password: password };
 
         try {
             let response: any = await firstValueFrom(

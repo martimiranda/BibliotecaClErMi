@@ -30,7 +30,7 @@ export class LoginComponent {
 
     ngOnInit(): void {
         this.loginForm = new FormGroup({
-            cif: new FormControl('', [Validators.required, Validators.minLength(9), LoginComponent.isValidCIF()]),
+            cif: new FormControl('', [Validators.required, Validators.minLength(9)]),
             password: new FormControl('', [Validators.required, Validators.minLength(4)]),
         });
     }
@@ -75,49 +75,5 @@ export class LoginComponent {
                     break;
             }
         }
-    }
-
-    static isValidCIF(): ValidatorFn {
-        return (control: AbstractControl): { [key: string]: any } | null => {
-            const cif = control.value;
-            const CIF_REGEX = /^([ABCDEFGHJKLMNPQRSUVW])(\d{7})([0-9A-J])$/;
-            var match = cif.match(CIF_REGEX);
-            if (match === null) {
-                return { invalidCIF: true };
-            }
-
-            var letter = match[1],
-                number = parseInt(match[2], 10),
-                controlValue = match[3];
-
-            var even_sum = 0;
-            var odd_sum = 0;
-            var n;
-
-            for (var i = 0; i < number.toString().length; i++) {
-                n = parseInt(number.toString()[i], 10);
-
-                if (i % 2 === 0) {
-                    n *= 2;
-                    odd_sum += n < 10 ? n : n - 9;
-                } else {
-                    even_sum += n;
-                }
-            }
-
-            var control_digit = 10 - parseInt((even_sum + odd_sum).toString().slice(-1), 10);
-            var control_letter = 'JABCDEFGHI'.substring(control_digit, control_digit + 1);
-
-            var isValid = false;
-            if (letter.match(/[ABEH]/)) {
-                isValid = controlValue === control_digit.toString();
-            } else if (letter.match(/[KPQS]/)) {
-                isValid = controlValue === control_letter;
-            } else {
-                isValid = controlValue === control_digit.toString() || controlValue === control_letter;
-            }
-
-            return isValid ? null : { invalidCIF: true };
-        };
     }
 }

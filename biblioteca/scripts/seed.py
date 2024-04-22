@@ -2,7 +2,7 @@
 import random
 from faker import Faker
 from django.contrib.auth.models import User
-from yourapp.models import Role, UserProfile, Item, Book, CD, Dispositive, ItemCopy, Reservation, Loan, Request, Log
+from biblioApp.models import Role, Item, Book, CD, Dispositive, ItemCopy, Reservation, Loan, Request, Log
 
 fake = Faker()
 
@@ -36,7 +36,7 @@ def create_users(num_users=10):
         cycle = random.choice(cycles)
         
         user = User.objects.create_user(username=username, email=email, password=password)
-        UserProfile.objects.create(user=user, name=name, surname=surname, surname2=surname2, role=role, date_of_birth=fake.date_of_birth(), center=center, cycle=cycle, image=None)
+        User.objects.create(user=user, name=name, surname=surname, surname2=surname2, role=role, date_of_birth=fake.date_of_birth(), center=center, cycle=cycle, image=None)
 
 
 
