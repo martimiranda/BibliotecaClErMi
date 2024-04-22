@@ -5,7 +5,7 @@
             <div class="flex flex-col gap-y-10">
                 <div class="input">
                     <span class="p-float-label">
-                        <input pInputText formControlName="cif" name="cif" id="cif" autocomplete="username" [class]="{'ng-invalid': loginError}"/>
+                        <input pInputText formControlName="cif" name="cif" id="cif" autocomplete="off" [class]="{'ng-invalid': loginError}"/>
                         <label for="username" [class]="{'ng-invalid': loginError}">Nom d'usuari o correu electònic</label>
                     </span>
                 </div>
@@ -16,6 +16,7 @@
                             formControlName="password"
                             name="password"
                             id="password"
+                            autocomplete="off"
                             [feedback]="false"
                             [toggleMask]="true"
                             [style]="{'width':'100%', 'height':'3rem'}"
