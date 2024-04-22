@@ -7,6 +7,7 @@
     </header>
 </div>
 
+<!-- Admin -->
 <div class="flex flex-row px-10 mb-40 justify-center items-center gap-x-20 w-full">
     <div class="confCompteContainer w-1/2">
         <div class="flex flex-row items-center">
@@ -48,7 +49,7 @@
     </div>
 
     <div class="flex flex-col justify-center items-start w-fit">
-        <h2>Estado de la cuenta</h2>
+        <h2>Estat del compte</h2>
         <div>
             <p-button severity="dangeroutlined">Tancar sessió</p-button>
 
@@ -56,7 +57,63 @@
 
             <div class="flex flex-row items-center gap-x-4">
                 <p-button severity="min">Cancelar</p-button>
-                <p-button severity="fill-rounded">Guardar cambios</p-button>
+                <p-button severity="fill-rounded">Guardar canvis</p-button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Usuario -->
+<div class="flex flex-row px-10 mb-40 justify-center items-center gap-x-20 w-full">
+    <div class="confCompteContainer w-1/2">
+        <div class="flex flex-row items-center">
+            <p-avatar label="P" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>
+
+            <div class="flex flex-col items-start">
+                <p class="font-bold">IETI</p>
+                <p>Usuari</p>
+            </div>
+        </div>
+
+
+        <div class="edicioCompteContainer">
+            <div class="flex flex-row gap-x-20 justify-between items-center">
+                <div class="flex flex-col">
+                    <h3>Usuari</h3>
+                    <p>admin123</p>
+                </div>
+                <p-button severity="fill">Editar</p-button>
+            </div>
+
+            <div class="flex flex-row gap-x-20 justify-between items-center">
+                <div class="flex flex-col">
+                    <h3>Correo</h3>
+                    <p>usuarigmail.com</p>
+                </div>
+                <p-button severity="fill">Editar</p-button>
+            </div>
+
+            <div class="flex flex-row gap-x-20 justify-between items-center">
+                <div class="flex flex-col">
+                    <h3>Contrasenya</h3>
+                    <p>************</p>
+                </div>
+                <p-button severity="fill">Editar</p-button>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="flex flex-col justify-center items-start w-fit">
+        <h2>Estat del compte</h2>
+        <div>
+            <p-button severity="dangeroutlined">Tancar sessió</p-button>
+
+            <hr>
+
+            <div class="flex flex-row items-center gap-x-4">
+                <p-button severity="min">Cancelar</p-button>
+                <p-button severity="fill-rounded">Guardar canvis</p-button>
             </div>
         </div>
     </div>
