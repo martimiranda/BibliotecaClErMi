@@ -18,7 +18,7 @@ export class AuthService {
 
         try {
             let response: any = await firstValueFrom(
-                this._http.post(`${this.baseUrl}/auth/login`, body, {
+                this._http.post(`${this.baseUrl}/auth/login/`, body, {
                     observe: 'response',
                     withCredentials: true,
                 }),

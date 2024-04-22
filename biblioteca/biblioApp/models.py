@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import User
 
 class Role(models.Model):
     name = models.CharField(max_length=50 , verbose_name="Nom del rol")
@@ -11,7 +12,10 @@ class Role(models.Model):
     def __str__(self):
         return self.name
 
-class User(AbstractBaseUser):
+
+    
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100 , verbose_name="Nom")
     surname = models.CharField(max_length=100 , verbose_name="Cognom")
     surname2 = models.CharField(max_length=100 , verbose_name="Segon cognom (opcional)", blank=True, null=True)
@@ -22,23 +26,6 @@ class User(AbstractBaseUser):
     image = models.ImageField(upload_to='user_images/', blank=True, null=True , verbose_name="Imatge de perfil")
     dni = models.CharField(max_length=9, unique=True, verbose_name="DNI")
     email = models.EmailField(unique=True, verbose_name="Correu electrònic")
-
-    USERNAME_FIELD = 'dni'
-    REQUIRED_FIELDS = ['name', 'surname', 'date_of_birth', 'email', 'center', 'cycle']
-
-    def get_full_name(self):
-        if self.surname2 is None:
-            return f'{self.name} {self.surname}'
-        else:
-            return f'{self.name} {self.surname} {self.surname2}'
-
-    def get_short_name(self):
-        return self.name
-    
-    def email_user(self):
-        return self.email
-
-
 
 class Item(models.Model):
     title = models.CharField(max_length=100 , verbose_name="Títol del item")    
@@ -106,7 +93,7 @@ class ItemCopy(models.Model):
  
 
 class Reservation(models.Model): #RESERVA
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Usuari")
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name="Usuari")
     copy = models.ForeignKey(ItemCopy, on_delete=models.CASCADE, verbose_name="Exemplar")
     reservation_date = models.DateField(auto_now_add=True , verbose_name="Data de la reserva")
 
@@ -118,7 +105,7 @@ class Reservation(models.Model): #RESERVA
         return self.name
 
 class Loan(models.Model): #PRESTEC
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Usuari")
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name="Usuari")
     copy = models.ForeignKey(ItemCopy, on_delete=models.CASCADE, verbose_name="Exemplar")
     loan_date = models.DateField(auto_now_add=True, verbose_name="Data de la solicitud del prèstec")
     return_date = models.DateField(null=True, blank=True, verbose_name="Data del final del prèstec")
@@ -131,12 +118,12 @@ class Loan(models.Model): #PRESTEC
         return self.name
 
 class Request(models.Model): #PETICIO
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Usuari")
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name="Usuari")
     request_date = models.DateField(auto_now_add=True, verbose_name="Data de la petició")
     request_text = models.TextField(verbose_name="Descripció de la petició")
     
 class Log(models.Model):
-    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(UserProfile, null=True, blank=True, on_delete=models.CASCADE)
     log_level = models.IntegerField()
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=1000)
