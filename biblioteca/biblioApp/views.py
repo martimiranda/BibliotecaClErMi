@@ -2,13 +2,14 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import authenticate, login
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.exceptions import AuthenticationFailed
 
 from .models import Book, CD, Item, Dispositive, Log, User, Role
 
-
+@csrf_exempt
 def get_token_by_dni_and_password(dni, password):
     try:
         user = authenticate(username=dni, password=password)
@@ -29,6 +30,7 @@ def get_token_by_dni_and_password(dni, password):
     except Exception as error:
         print('auth.service | get_token_by_dni_and_password -> error:', error)
 
+@csrf_exempt
 def new_login(request):
     if request.method == 'POST':
         dni = request.POST.get('dni')
