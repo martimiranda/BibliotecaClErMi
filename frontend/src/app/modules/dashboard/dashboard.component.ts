@@ -111,9 +111,9 @@ export class DashboardComponent {
             }
 
             this._dialogService.showDialog('INFORMACIÓ', 'Perfil actualitzat correctament');
-        } catch (error) {
+        } catch (error: any) {
             console.error('Error updating profile:', error);
-            this._dialogService.showDialog('ERROR', 'Error al actualizar el perfil');
+            this._dialogService.showDialog('ERROR', error.message);
         }
     }
 

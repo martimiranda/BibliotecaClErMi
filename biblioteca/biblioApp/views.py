@@ -32,7 +32,7 @@ def get_token_by_email_and_password(email, password):
 
         return token_data
     except Exception as error:
-        print('auth.service | get_token_by_dni_and_password -> error:', error)
+        print('get_token_by_dni_and_password -> error:', error)
 
 @csrf_exempt
 def new_login(request):
@@ -69,7 +69,7 @@ def register(password, name, surname, surname2, role_id, date_of_birth, center, 
 
         return user_profile
     except Exception as error:
-        print('auth.service | register -> error:', error)
+        print('register -> error:', error)
 
 
 
@@ -192,7 +192,7 @@ def user_details(request):
             return JsonResponse({'error': 'User profile not found'}, status=404)
 
         except Exception as error:
-            print('Error:', error)
+            print('user_details -> Error:', error)
             return JsonResponse({'error': 'Failed to get user details'}, status=500)
 
     else:
@@ -201,16 +201,14 @@ def user_details(request):
 @api_view(['POST']) 
 def update_data_user(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        print('data', data)
-        user_data = data.get('data')
-        print('userData', user_data)
+        user_data = json.loads(request.body).get('data')
+        print('update_data_user -> user_data', user_data)
 
         try:
             user = User.objects.get(username=user_data.get('username'))
-            print('user encontrado')
+            print('update_data_user -> user encontrado')
             user_profile = UserProfile.objects.get(user=user)
-            print('user profile encontrado')
+            print('update_data_user -> user profile encontrado')
 
             if 'email' in user_data:
                 user.username = user_data.get('email')
@@ -241,7 +239,7 @@ def verify_password(request):
         if user is not None and user.is_active:
             return JsonResponse({'isValid': True}, status=200)
         else:
-            print('Incorrect password')
+            print('verify_password -> Incorrect password')
             return JsonResponse({'isValid': False}, status=401)
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
