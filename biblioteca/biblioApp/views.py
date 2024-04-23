@@ -4,6 +4,7 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import authenticate, login
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Q
 
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from rest_framework.exceptions import AuthenticationFailed
@@ -265,3 +266,17 @@ def save_password(request):
             return JsonResponse({'message': 'User does not exist'}, status=404)
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
+    
+def search_items(request):
+    query = request.GET.get('q', '')
+    if len(query) >= 3:
+        # Realiza la búsqueda en la base de datos
+        results = (
+            Item.objects.filter(Q(title__icontains=query) | Q(signature__icontains=query))[:5] |
+            Book.objects.filter(Q(title__icontains=query) | Q(author__icontains=query))[:5] |
+            CD.objects.filter(Q(title__icontains=query) | Q(author__icontains=query))[:5] |
+            Dispositive.objects.filter(Q(title__icontains=query) | Q(brand__icontains=query))[:5]
+        )
+        data = [{'id': obj.id, 'name': str(obj)} for obj in results]
+        return JsonResponse(data, safe=False)
+    return JsonResponse([], safe=False)
