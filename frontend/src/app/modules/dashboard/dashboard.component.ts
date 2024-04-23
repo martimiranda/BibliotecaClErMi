@@ -43,7 +43,9 @@ export class DashboardComponent {
 
     async ngOnInit() {
         this.profileData = await this._profileService.getSelfProfileDataWithoutLoading();
-        this.originalProfileData = JSON.parse(JSON.stringify(this.profileData));
+        console.log('DashboardComponent | ngOnInit - profileData -> ', this.profileData);
+
+        await this.setDefaultData();
 
         this.role = await this._profileService.getRole();
         this.roleName = this.getRoleName();
@@ -66,54 +68,65 @@ export class DashboardComponent {
         return '';
     }
 
-    cancelChanges() {
-        this.profileData = JSON.parse(JSON.stringify(this.originalProfileData));
+    async cancelChanges() {
+        await this.setDefaultData();
         this.isEditingName = false;
         this.isEditingEmail = false;
         this.isEditingPassword = false;
     }
 
-    async saveChanges() {
-        let updateData: any = {};
+    async setDefaultData() {
+        if (!this.profileData) await this._profileService.getSelfProfileDataWithoutLoading();
+        this.newName = this.profileData.name;
+        this.newSurname = this.profileData.surname;
+        this.newSurname2 = this.profileData.surname2;
+        this.newEmail = this.profileData.username;
+        this.lastPassword = '';
+        this.password = '';
+        this.repeatPassword = '';
+    }
 
-        if (this.newName) {
-            updateData['first_name'] = this.newName;
-        }
-        if (this.newSurname) {
-            updateData['last_name'] = this.newSurname;
-        }
-        if (this.newSurname2) {
-            updateData['second_last_name'] = this.newSurname2;
-        }
-        if (this.newEmail) {
-            updateData['email'] = this.newEmail;
-        }
+    async saveChanges() {
         if (this.lastPassword || this.password || this.repeatPassword) {
             await this.updatePassword();
         }
 
-        try {
-            const response = await this._profileService.updateProfile(updateData);
-            console.log('DashboardComponent | saveChanges - response -> ', response);
+        let updateData: any = {};
+        updateData['username'] = this.profileData.username;
 
-            // Actualizar la interfaz de usuario con los nuevos valores
-            if (this.newName) {
-                this.profileData.first_name = this.newName;
-            }
-            if (this.newSurname) {
-                this.profileData.last_name = this.newSurname;
-            }
-            if (this.newSurname2) {
-                this.profileData.second_last_name = this.newSurname2;
-            }
-            if (this.newEmail) {
-                this.profileData.email = this.newEmail;
-            }
+        if (this.newName != this.profileData.name) {
+            updateData['first_name'] = this.newName;
+        }
+        if (this.newSurname != this.profileData.surname) {
+            updateData['last_name'] = this.newSurname;
+        }
+        if (this.newSurname2 != this.profileData.surname2) {
+            updateData['second_last_name'] = this.newSurname2;
+        }
+        if (this.newEmail != this.profileData.username) {
+            updateData['email'] = this.newEmail;
+        }
 
-            this._dialogService.showDialog('INFORMACIÓ', 'Perfil actualitzat correctament');
-        } catch (error: any) {
-            console.error('Error updating profile:', error);
-            this._dialogService.showDialog('ERROR', error.message);
+        if (Object.keys(updateData).length > 0) {
+            try {
+                await this._profileService.updateProfile(updateData);
+
+                // Actualizar la interfaz de usuario con los nuevos valores
+                this.profileData = {
+                    ...this.profileData,
+                    name: this.newName,
+                    surname: this.newSurname,
+                    surname2: this.newSurname2,
+                    username: this.newEmail,
+                };
+
+                await this.cancelChanges();
+
+                this._dialogService.showDialog('INFORMACIÓ', 'Perfil actualitzat correctament');
+            } catch (error: any) {
+                console.error('Error updating profile:', error);
+                this._dialogService.showDialog('ERROR', 'Error actualitzant el perfil');
+            }
         }
     }
 
