@@ -8,6 +8,7 @@ import { InputTextModule } from 'primeng/inputtext';
 
 import { AuthService } from '../auth.service';
 import { ProfileService } from '../../../services/profile.service';
+import { DialogService } from '../../../services/dialog.service';
 
 @Component({
     selector: 'app-login',
@@ -20,8 +21,9 @@ export class LoginComponent {
     private _authService = inject(AuthService);
     private _profileService = inject(ProfileService);
     private _router = inject(Router);
+    private _dialogService = inject(DialogService);
 
-    cif: string = '';
+    username: string = '';
     password: string = '';
 
     loginError: boolean = false;
@@ -30,8 +32,8 @@ export class LoginComponent {
 
     ngOnInit(): void {
         this.loginForm = new FormGroup({
-            cif: new FormControl('', [Validators.required, Validators.minLength(9)]),
-            password: new FormControl('', [Validators.required, Validators.minLength(4)]),
+            username: new FormControl('', [Validators.required]),
+            password: new FormControl('', [Validators.required]),
         });
     }
 
@@ -53,14 +55,15 @@ export class LoginComponent {
         }
 
         try {
-            const response = await this._authService.login(this.loginForm.get('cif')?.value, this.loginForm.get('password')?.value);
+            const response = await this._authService.login(this.loginForm.get('username')?.value, this.loginForm.get('password')?.value);
+            console.log('login.component | onLogin - response -> ', response);
 
-            if (response.token) {
+            if (response.body.token.access) {
                 const profile = await this._profileService.getSelfProfileData();
                 this._profileService.selfProfileData = profile;
                 console.log('login.component | onLogin - profile -> ', profile);
 
-                this._router.navigateByUrl('/');
+                this._router.navigateByUrl('/dashboard');
             } else throw new Error('CIF or password are incorrect');
         } catch (error: any) {
             switch (error.status) {
