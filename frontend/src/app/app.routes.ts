@@ -15,7 +15,7 @@ export const routes: Routes = [
         path: '',
         component: LayoutComponent,
         canActivate: [JwtGuard],
-        children: [{ path: 'dashboard', pathMatch: 'full', component: DashboardComponent }],
+        children: [{ path: '', pathMatch: 'full', component: DashboardComponent }],
     },
     { path: '**', redirectTo: '' },
 ];
