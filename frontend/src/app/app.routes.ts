@@ -11,14 +11,12 @@ export const routes: Routes = [
         path: 'landing',
         component: HomeComponent,
     },
+    { path: 'cercar-llibre', component: SearchComponent },
     {
         path: '',
         component: LayoutComponent,
         canActivate: [JwtGuard],
-        children: [
-            { path: '', pathMatch: 'full', component: DashboardComponent },
-            { path: 'cercar-llibre', component: SearchComponent },
-        ],
+        children: [{ path: '', pathMatch: 'full', component: DashboardComponent }],
     },
     { path: '**', redirectTo: '' },
 ];
