@@ -28,6 +28,12 @@ export class HomeComponent {
     _itemService = inject(ItemService);
     _dialogService = inject(DialogService);
 
+    // POP UP OLVIDAR CONTRASEÑA
+    popupVisible = false;
+    showPopup() {
+        this.popupVisible = true;
+    }
+
     items: any[] | undefined;
 
     selectedItem: string = '';

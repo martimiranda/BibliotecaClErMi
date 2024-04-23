@@ -1,27 +1,30 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractControl, FormControl, FormGroup, FormsModule, ValidationErrors, ValidatorFn, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputOtpModule } from 'primeng/inputotp';
 
 import { AuthService } from '../auth.service';
 import { ProfileService } from '../../../services/profile.service';
 import { DialogService } from '../../../services/dialog.service';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
     selector: 'app-login',
     standalone: true,
-    imports: [FormsModule, PasswordModule, ButtonModule, InputTextModule, ReactiveFormsModule],
+    imports: [FormsModule, PasswordModule, ButtonModule, InputTextModule, ReactiveFormsModule, InputOtpModule, DialogModule],
     templateUrl: './login.component.html',
     styleUrl: './login.component.css',
 })
 export class LoginComponent {
     private _authService = inject(AuthService);
-    private _profileService = inject(ProfileService);
+    // private _profileService = inject(ProfileService);
     private _router = inject(Router);
     private _dialogService = inject(DialogService);
+    private _profileService = inject(ProfileService);
 
     username: string = '';
     password: string = '';
@@ -78,5 +81,16 @@ export class LoginComponent {
                     break;
             }
         }
+    }
+
+    // ENVIAR CODI
+    value: any;
+    @Input() popupVisible: boolean;
+
+    constructor() {
+        this.popupVisible = false;
+    }
+    togglePopup() {
+        this.popupVisible = !this.popupVisible;
     }
 }
