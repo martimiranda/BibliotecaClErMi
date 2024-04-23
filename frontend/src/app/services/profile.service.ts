@@ -58,6 +58,8 @@ export class ProfileService {
     async updateProfile(data: any) {
         try {
             const response: any = await firstValueFrom(this.http.post(`${this.baseUrl}/user/update/`, { data: data }));
+
+            if (response.status != 200) throw new Error('Error updating profile data');
             return response;
         } catch (error: any) {
             console.error('Error updating profile data', error);
