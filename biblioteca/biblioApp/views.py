@@ -13,12 +13,17 @@ from rest_framework import status
 
 from .models import Book, CD, Item, Dispositive, Log, User, Role, UserProfile
 
+from datetime import timedelta
+from rest_framework_simplejwt.settings import api_settings
+api_settings.ACCESS_TOKEN_LIFETIME = timedelta(minutes=15)
+api_settings.REFRESH_TOKEN_LIFETIME = timedelta(days=1)
+
 @csrf_exempt
 def get_token_by_email_and_password(email, password):
     try:
         user = authenticate(username=email, password=password)
         if user is None:
-            raise AuthenticationFailed('Invalid DNI or password')
+            raise AuthenticationFailed('Invalid email or password')
 
         refresh = RefreshToken.for_user(user)
 
@@ -32,7 +37,7 @@ def get_token_by_email_and_password(email, password):
 
         return token_data
     except Exception as error:
-        print('get_token_by_dni_and_password -> error:', error)
+        print('get_token_by_email_and_password -> error:', error)
 
 @csrf_exempt
 def new_login(request):
