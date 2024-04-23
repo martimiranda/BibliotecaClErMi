@@ -163,6 +163,7 @@ def refresh_token(request):
     else:
         return Response({'error': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
     
+@api_view(['GET'])
 def user_details(request):
     if request.method == 'GET':
         try:
@@ -267,16 +268,28 @@ def save_password(request):
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
     
+@api_view(['GET'])
 def search_items(request):
-    query = request.GET.get('q', '')
-    if len(query) >= 3:
-        # Realiza la búsqueda en la base de datos
-        results = (
-            Item.objects.filter(Q(title__icontains=query) | Q(signature__icontains=query))[:5] |
-            Book.objects.filter(Q(title__icontains=query) | Q(author__icontains=query))[:5] |
-            CD.objects.filter(Q(title__icontains=query) | Q(author__icontains=query))[:5] |
-            Dispositive.objects.filter(Q(title__icontains=query) | Q(brand__icontains=query))[:5]
-        )
-        data = [{'id': obj.id, 'name': str(obj)} for obj in results]
-        return JsonResponse(data, safe=False)
-    return JsonResponse([], safe=False)
+    query = request.GET.get('item', '')
+    print('search_items -> query:', query)
+
+    results = []
+
+    models_to_search = [
+        (Item, ['title', 'material_type', 'signature']),
+        (Book, ['title', 'author']),
+        (CD, ['title', 'author']),
+        (Dispositive, ['title', 'brand']),
+    ]
+
+    for model, fields in models_to_search:
+        for field in fields:
+            filter_kwargs = {f"{field}__icontains": query}
+            model_results = model.objects.filter(**filter_kwargs)[:5]
+            for obj in model_results:
+                results.append({'id': obj.id, 'name': str(obj)})
+                if len(results) >= 5:
+                    return JsonResponse(results, safe=False)
+
+    return JsonResponse(results, safe=False)
+

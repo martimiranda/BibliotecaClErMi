@@ -28,41 +28,48 @@ export class HomeComponent {
     _itemService = inject(ItemService);
     _dialogService = inject(DialogService);
 
+    filterChangeTimeout: any;
+
     // POP UP OLVIDAR CONTRASEÑA
     popupVisible = false;
     showPopup() {
         this.popupVisible = true;
     }
 
-    items: any[] | undefined;
+    items: any[] = [];
 
     selectedItem: string = '';
-    searchResults!: any[];
 
-    suggestions: any[] | undefined;
-    search(event: AutoCompleteCompleteEvent) {
-        const query = event.query;
-        if (query.length >= 3) {
-            this._itemService
-                .searchItems(query)
-                .then((response: any) => {
-                    this.searchResults = response;
-                })
-                .catch((error: any) => {
-                    console.error('Error fetching items', error);
-                    this._dialogService.showDialog(
-                        'ERROR',
-                        "No s'han pogut carregar els resultats de la cerca. Si us plau, torna-ho a provar més tard.",
-                    );
-                });
+    async searchItems(item: string) {
+        try {
+            const response: any = await this._itemService.searchItems(item);
+            console.log('HomeComponent | searchItems - response -> ', response);
+
+            this.items = response;
+            suggestions: [] = this.items.map((item) => item.name);
+        } catch (error: any) {
+            console.error('Error fetching items', error);
+            this._dialogService.showDialog('ERROR', "No s'han pogut carregar els resultats de la cerca. Si us plau, torna-ho a provar més tard.");
         }
     }
 
-    navigateToSearchPage() {
-        if (this.selectedItem) {
-            this.router.navigate(['/search'], { queryParams: { term: this.selectedItem } });
-        } else {
-            this._dialogService.showDialog('ATENCIÓ', 'Si us plau, introdueix un terme de cerca.');
-        }
+    onFilterChange() {
+        clearTimeout(this.filterChangeTimeout);
+        this.filterChangeTimeout = setTimeout(() => {
+            if (this.selectedItem.length >= 3) {
+                this.searchItems(this.selectedItem);
+            } else {
+                this.items = [];
+            }
+        }, 1000);
+    }
+
+    getItemName(item: any) {
+        return item.name;
+    }
+
+    onItemSelect(event: any) {
+        const itemId = event.value.id;
+        console.log('HomeComponent | onItemSelect - itemId -> ', itemId);
     }
 }
