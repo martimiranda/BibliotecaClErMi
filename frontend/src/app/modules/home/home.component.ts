@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule }   from '@angular/forms';
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -25,70 +25,22 @@ interface AutoCompleteCompleteEvent {
             ToastModule,
             LoginComponent
           ],
-  providers: [MessageService],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 
-export class HomeComponent implements OnInit {
-  items: any[] | undefined;
+export class HomeComponent  {
+    // POP UP OLVIDAR CONTRASEÑA
+    popupVisible = false;
+    showPopup() { this.popupVisible = true; }
 
-  selectedItem: any;
+    // AUTOCOMPLETE
+    items: any[] | undefined;
+    selectedItem: any;
+    suggestions: any[] | undefined;
 
-  suggestions: any[] | undefined;
-
-  search(event: AutoCompleteCompleteEvent) {
-      this.suggestions = [...Array(10).keys()].map(item => event.query + '-' + item);
-  }
-
-  menuItems: MenuItem[] | undefined;
-
-    constructor(private messageService: MessageService) {}
+    search(event: AutoCompleteCompleteEvent) {
+        this.suggestions = [...Array(10).keys()].map(item => event.query + '-' + item);
+    }
     
-    ngOnInit() {
-        this.menuItems = [
-            {
-                label: 'Options',
-                menuItems: [
-                    {
-                        label: 'Update',
-                        icon: 'pi pi-refresh',
-                        command: () => {
-                            this.update();
-                        }
-                    },
-                    {
-                        label: 'Delete',
-                        icon: 'pi pi-times',
-                        command: () => {
-                            this.delete();
-                        }
-                    }
-                ]
-            },
-            {
-                label: 'Navigate',
-                menuItems: [
-                    {
-                        label: 'Angular',
-                        icon: 'pi pi-external-link',
-                        url: 'http://angular.io'
-                    },
-                    {
-                        label: 'Router',
-                        icon: 'pi pi-upload',
-                        routerLink: '/fileupload'
-                    }
-                ]
-            }
-        ];
-    }
-
-    update() {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Data Updated' });
-    }
-
-    delete() {
-        this.messageService.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted' });
-    }
 }

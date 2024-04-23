@@ -50,7 +50,7 @@
 @if(popupVisible) {
     <div class="popup-container">
         <div class="forgottenPwdContainer gap-y-4">
-            <p class="closePopUp">X</p>    
+            <p class="closePopUp" (click)="togglePopup()">X</p>
             <i class="pi pi-envelope"></i>
             <h3>T'hem enviat un correu</h3>
             <p>Introduïu els cinc dígits indicats al vostre correu. Si no el trobes, revisa a la safata de Spam o espera per poder-lo reenviar.</p>
@@ -60,7 +60,7 @@
             </div>
 
             <p-button severity="fill">Següent</p-button>
-            <a href=""><p class="forgottenPwd">Reenviar codi en 20 segons</p></a>
+            <p class="forgottenPwd">Reenviar codi en 20 segons</p>
         </div>
     </div>
 }

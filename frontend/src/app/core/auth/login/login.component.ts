@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormsModule, ValidationErrors, ValidatorFn, Validators, ReactiveFormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
@@ -128,9 +128,9 @@ export class LoginComponent {
     }
 
     // ENVIAR CODI
-    value : any
-    popupVisible = false;
-    togglePopup() {
-        this.popupVisible = !this.popupVisible;
-    }
+    value : any;
+    @Input() popupVisible: boolean; 
+
+    constructor() { this.popupVisible = false; }
+    togglePopup() { this.popupVisible = !this.popupVisible; }
 }
