@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Role } from '../constants/role.code';
-import { BehaviorSubject, firstValueFrom } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
@@ -18,13 +18,8 @@ export class ProfileService {
 
     constructor(private http: HttpClient) {}
 
-    profileDataChanges = new BehaviorSubject<any>(null);
-
     async ngOnInit() {
         this.selfProfileData = await this.getSelfProfileData();
-        this.profileDataChanges.subscribe((value) => {
-            this.selfProfileData = value;
-        });
     }
 
     async getSelfProfileData() {
@@ -34,9 +29,9 @@ export class ProfileService {
                     observe: 'response',
                 }),
             );
+            console.log('ProfileService | getSelfProfileData - response -> ', response.body);
 
-            this.selfProfileData = response.body.userDetails;
-            this.profileDataChanges.next(this.selfProfileData);
+            this.selfProfileData = response.body;
             return this.selfProfileData;
         } catch (error: any) {
             console.error('Error fetching profile data', error);
@@ -60,9 +55,20 @@ export class ProfileService {
         return this.selfProfileData.id;
     }
 
+    async updateProfile(data: any) {
+        try {
+            const response: any = await firstValueFrom(this.http.post(`${this.baseUrl}/user/update/`, { data: data }));
+            return response;
+        } catch (error: any) {
+            console.error('Error updating profile data', error);
+            throw error;
+        }
+    }
+
     logout() {
         this.selfProfileData = null;
         this._storageService.removeItem('token');
-        this._router.navigateByUrl('/login');
+        this._storageService.removeItem('refresh');
+        this._router.navigateByUrl('/landing');
     }
 }

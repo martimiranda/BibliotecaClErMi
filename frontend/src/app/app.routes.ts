@@ -8,16 +8,14 @@ import { HomeComponent } from './modules/home/home.component';
 export const routes: Routes = [
     {
         path: 'landing',
-        component: LoginComponent,
+        pathMatch: 'full',
+        component: HomeComponent,
     },
     {
         path: '',
         component: LayoutComponent,
-        // canActivate: [JwtGuard],
-        children: [
-            { path: '', pathMatch: 'full', component: HomeComponent },
-            { path: 'dashboard', pathMatch: 'full', component: DashboardComponent },
-        ],
+        canActivate: [JwtGuard],
+        children: [{ path: 'dashboard', pathMatch: 'full', component: DashboardComponent }],
     },
     { path: '**', redirectTo: '' },
 ];
