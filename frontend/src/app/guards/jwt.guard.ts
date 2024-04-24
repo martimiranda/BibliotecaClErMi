@@ -10,5 +10,5 @@ export const JwtGuard: CanActivateFn = () => {
     const token = authService.getToken();
     if (token) return true;
 
-    return router.navigateByUrl('/login');
+    return router.navigateByUrl('/landing');
 };

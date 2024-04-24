@@ -15,34 +15,43 @@ export class LogService {
 
     constructor(private http: HttpClient) {}
 
-    logInfo(message: string, object: any) {
-        let log = { level: 'INFO', message, object };
+    logInfo(title: string, description: string) {
+        let log = { level: 'INFO', title, description };
         this.saveLogInStorage(log);
     }
 
-    logWarning(message: string, object: any) {
-        let log = { level: 'WARNING', message, object };
+    logWarning(title: string, description: string) {
+        let log = { level: 'WARNING', title, description };
         this.saveLogInStorage(log);
     }
 
-    logError(message: string, object: any) {
-        let log = { level: 'ERROR', message, object };
+    logError(title: string, description: string) {
+        let log = { level: 'ERROR', title, description };
         this.saveLogInStorage(log);
     }
 
-    logFatal(message: string, object: any) {
-        let log = { level: 'FATAL', message, object };
+    logFatal(title: string, description: string) {
+        let log = { level: 'FATAL', title, description };
         this.saveLogInStorage(log);
     }
 
     // Método para guardar un nuevo log en el localStorage
     async saveLogInStorage(log: any) {
-        const userID = await this._profileService.getUserID();
-        const timestamp = new Date().toISOString();
-        log = { ...log, userID, timestamp };
-        let logs: any[] = JSON.parse(localStorage.getItem(this.logsKey) || '[]');
-        logs.push(log);
-        localStorage.setItem(this.logsKey, JSON.stringify(logs));
+        try {
+            let userID;
+            if (this._profileService.selfProfileData) {
+                const userID = await this._profileService.getUserID();
+            } else {
+                const userID = null;
+            }
+            const date = new Date().toISOString();
+            log = { ...log, userID, date };
+            let logs: any[] = JSON.parse(localStorage.getItem(this.logsKey) || '[]');
+            logs.push(log);
+            localStorage.setItem(this.logsKey, JSON.stringify(logs));
+        } catch (error) {
+            console.error('Error saving log in storage', error);
+        }
     }
 
     // Método para obtener todos los logs guardados en el localStorage
@@ -57,24 +66,13 @@ export class LogService {
 
     async sendLogs() {
         const logs = this.getLogs();
-        if (logs.length == 0) return;
-
-        try {
-            let response: any = await firstValueFrom(
-                this.http.post(`${this.baseUrl}/logs/save`, logs, {
-                    observe: 'response',
-                }),
-            );
-            if (response.status !== 200) {
-                throw new Error('Error sending logs');
-            }
-            this.logInfo('Logs sent successfully', logs);
-            response = response.body;
-            this.clearLogs();
-            return response;
-        } catch (error) {
-            console.error('Error sending logs', error);
-            this.logError('LogService | sendLogs() ---> Error sending logs', logs);
+        if (logs.length > 0) {
+            try {
+                await firstValueFrom(this.http.post(`${this.baseUrl}/logs/save/`, logs, { observe: 'response' }));
+                this.logInfo('Data sent successfully', 'The data was sent to the API successfully');
+                this.clearLogs();
+                return;
+            } catch (error: any) {}
         }
     }
 }
