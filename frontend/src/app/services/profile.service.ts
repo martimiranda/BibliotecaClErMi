@@ -25,7 +25,7 @@ export class ProfileService {
     async getSelfProfileData() {
         try {
             const response: any = await firstValueFrom(
-                this.http.get(`${this.baseUrl}/user/userDetails`, {
+                this.http.get(`${this.baseUrl}/user/userDetails/`, {
                     observe: 'response',
                 }),
             );

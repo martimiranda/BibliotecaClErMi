@@ -10,7 +10,7 @@ import { firstValueFrom } from 'rxjs';
 export class LogService {
     private _profileService = inject(ProfileService);
 
-    private baseUrl: string = environment.apiUrl + '/log';
+    private baseUrl: string = environment.apiUrl;
     private logsKey = 'logs';
 
     constructor(private http: HttpClient) {}
@@ -40,9 +40,9 @@ export class LogService {
         try {
             let userID;
             if (this._profileService.selfProfileData) {
-                const userID = await this._profileService.getUserID();
+                userID = await this._profileService.getUserID();
             } else {
-                const userID = null;
+                userID = null;
             }
             const date = new Date().toISOString();
             log = { ...log, userID, date };
