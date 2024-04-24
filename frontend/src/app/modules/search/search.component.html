@@ -3,6 +3,23 @@
         <div class="flex flex-col items-center justify-center ">
             <h1>BIBLIOTECA IES ESTEVE TERRADAS I ILLA</h1>
             <p class="text-white font-semibold">Text de subtítol</p>
+
+            <div class="flex flex-row items-center gap-4">
+                <div class="card flex justify-content-center">
+                    <p-dropdown [options]="groupedCities" [(ngModel)]="selectedCity" placeholder="Cercar per..." [group]="true">
+                        <ng-template let-group pTemplate="group">
+                            <div class="flex align-items-center">
+                                <img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png" [class]="'mr-2 flag flag-' + group.value" style="width: 20px" />
+                                <span>{{ group.label }}</span>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>      
+
+                <div class="card flex justify-content-center">
+                    <p-autoComplete [(ngModel)]="selectedItem" (completeMethod)="search($event)" minLength="3" maxlength="5"></p-autoComplete>
+                </div>
+            </div>
         </div>
     </header>
 </div>
