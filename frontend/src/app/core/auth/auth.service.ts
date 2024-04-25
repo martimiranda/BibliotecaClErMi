@@ -45,7 +45,7 @@ export class AuthService {
     async validateToken(): Promise<boolean> {
         try {
             const response = await firstValueFrom(
-                this._http.get(`${this.baseUrl}/auth/verify`, {
+                this._http.get(`${this.baseUrl}/auth/verify/`, {
                     observe: 'response',
                 }),
             );

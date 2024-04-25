@@ -10,8 +10,6 @@ class Role(models.Model):
 
     def __str__(self):
         return self.name
-
-
     
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -122,8 +120,8 @@ class Request(models.Model): #PETICIO
     request_text = models.TextField(verbose_name="Descripció de la petició")
     
 class Log(models.Model):
-    user = models.ForeignKey(UserProfile, null=True, blank=True, on_delete=models.CASCADE)
-    log_level = models.IntegerField()
+    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
+    log_level = models.CharField(max_length=100)
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=1000)
     route = models.CharField(max_length=100)

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HomeComponent } from './modules/home/home.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
+import { SearchComponent } from './modules/search/search.component';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,8 @@ import { DashboardComponent } from './modules/dashboard/dashboard.component';
   imports: [
             RouterOutlet,
             HomeComponent,
-            DashboardComponent
+            DashboardComponent,
+            SearchComponent
           ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

@@ -1,94 +1,75 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ToastModule } from 'primeng/toast';
 import { MenuModule } from 'primeng/menu';
-import { RouterLink } from '@angular/router';
-import { MenuItem, MessageService } from 'primeng/api';
+import { Router, RouterLink } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { LoginComponent } from '../../core/auth/login/login.component';
+import { ItemService } from '../../services/item.service';
+import { DialogService } from '../../services/dialog.service';
 
 interface AutoCompleteCompleteEvent {
-  originalEvent: Event;
-  query: string;
+    originalEvent: Event;
+    query: string;
 }
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [
-            ButtonModule,
-            AutoCompleteModule,
-            FormsModule,
-            MenuModule,
-            RouterLink,
-            ToastModule,
-            LoginComponent
-          ],
-  providers: [MessageService],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+    selector: 'app-home',
+    standalone: true,
+    imports: [ButtonModule, AutoCompleteModule, FormsModule, MenuModule, RouterLink, ToastModule, LoginComponent],
+    providers: [MessageService],
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.css',
 })
+export class HomeComponent {
+    router = inject(Router);
+    _itemService = inject(ItemService);
+    _dialogService = inject(DialogService);
 
-export class HomeComponent implements OnInit {
-  items: any[] | undefined;
+    filterChangeTimeout: any;
 
-  selectedItem: any;
+    // POP UP OLVIDAR CONTRASEÑA
+    popupVisible = false;
+    showPopup() {
+        this.popupVisible = true;
+    }
 
-  suggestions: any[] | undefined;
+    items: any[] = [];
 
-  search(event: AutoCompleteCompleteEvent) {
-      this.suggestions = [...Array(10).keys()].map(item => event.query + '-' + item);
-  }
+    selectedItem: string = '';
 
-  menuItems: MenuItem[] | undefined;
+    async searchItems(item: string) {
+        try {
+            const response: any = await this._itemService.searchItems(item);
+            console.log('HomeComponent | searchItems - response -> ', response);
 
-    constructor(private messageService: MessageService) {}
-    
-    ngOnInit() {
-        this.menuItems = [
-            {
-                label: 'Options',
-                menuItems: [
-                    {
-                        label: 'Update',
-                        icon: 'pi pi-refresh',
-                        command: () => {
-                            this.update();
-                        }
-                    },
-                    {
-                        label: 'Delete',
-                        icon: 'pi pi-times',
-                        command: () => {
-                            this.delete();
-                        }
-                    }
-                ]
-            },
-            {
-                label: 'Navigate',
-                menuItems: [
-                    {
-                        label: 'Angular',
-                        icon: 'pi pi-external-link',
-                        url: 'http://angular.io'
-                    },
-                    {
-                        label: 'Router',
-                        icon: 'pi pi-upload',
-                        routerLink: '/fileupload'
-                    }
-                ]
+            this.items = response;
+            suggestions: [] = this.items.map((item) => item.name);
+        } catch (error: any) {
+            console.error('Error fetching items', error);
+            this._dialogService.showDialog('ERROR', "No s'han pogut carregar els resultats de la cerca. Si us plau, torna-ho a provar més tard.");
+        }
+    }
+
+    onFilterChange() {
+        clearTimeout(this.filterChangeTimeout);
+        this.filterChangeTimeout = setTimeout(() => {
+            if (this.selectedItem.length >= 3) {
+                this.searchItems(this.selectedItem);
+            } else {
+                this.items = [];
             }
-        ];
+        }, 1000);
     }
 
-    update() {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Data Updated' });
+    getItemName(item: any) {
+        return item.name;
     }
 
-    delete() {
-        this.messageService.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted' });
+    onItemSelect(event: any) {
+        const itemId = event.value.id;
+        console.log('HomeComponent | onItemSelect - itemId -> ', itemId);
     }
 }

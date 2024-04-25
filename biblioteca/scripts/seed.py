@@ -20,16 +20,18 @@ def create_users(num_users=10):
     "Institut Sant Josep de Calassanç de Barcelona",
     "Institut de Badalona"
     ]   
+    names = ["María", "José", "Carmen", "Manuel", "Ana", "Francisco", "Isabel", "David", "Laura", "Antonio"]
+    surnames = ["García", "Martínez", "López", "Sánchez", "Pérez", "González", "Rodríguez", "Fernández", "López", "Martín"]
 
     cycles = ["1ESO","2ESO","3ESO","4ESO","1Bachillerat","2Bachillerat","Cicle Grau Mitjà Gestió administrativa", "Cicle Grau Mitjà Electromecànica de vehicles automòbils", "Cicle Grau Mitjà Mecanització","Cicle Grau Mitjà Manteniment electromecànic", "Cicle Grau Mitjà Sistemes microinformàtics i xarxes","Cicle Grau Superior Assistència a la direcció", "Cicle Grau Superior Administració i finances", "Cicle Grau Superior Automoció","Cicle Grau Superior Programació de la producció en fabricació mecànica","Cicle Grau Superior Mecatrònica industrial","Cicle Grau Superior Gestió de l'aigua","Cicle Grau Superior Desenvolupament d'aplicacions multiplataforma", "Cicle Grau Superior Desenvolupament d'aplicacions web"]
     roles = Role.objects.all()
     
     for _ in range(num_users):
-        name = fake.first_name()
-        surname = fake.last_name()
-        surname2 = fake.last_name() if random.choice([True, False]) else None
-        username = fake.user_name()
-        email = fake.email()
+        name = random.choice(names)
+        surname = random.choice(surnames)
+        surname2 = random.choice(surnames)
+        username = fake.email()
+        email = username
         password = fake.password()
         role = random.choice(roles)
         center = random.choice(centers)
@@ -39,7 +41,24 @@ def create_users(num_users=10):
         User.objects.create(user=user, name=name, surname=surname, surname2=surname2, role=role, date_of_birth=fake.date_of_birth(), center=center, cycle=cycle, image=None)
 
 
+def generate_ISBN():
+    prefix = "978"  # Prefijo común para ISBN-13
+    grupo_registrante = "0"  # Grupo registrante, puedes cambiarlo según el país
+    publicacion = str(random.randint(100000000, 999999999))  # Número aleatorio de publicación
+    check_digit = 0
 
+    isbn = prefix + grupo_registrante + publicacion
+
+    for i in range(len(isbn)):
+        if i % 2 == 0:
+            check_digit += int(isbn[i])
+        else:
+            check_digit += 3 * int(isbn[i])
+
+    check_digit = (10 - (check_digit % 10)) % 10
+    isbn += str(check_digit)
+
+    return isbn
 
 def create_books(num_books=20):
     titles = ["To Kill a Mockingbird", "1984", "The Great Gatsby", "Pride and Prejudice", "Harry Potter and the Philosopher's Stone", "The Catcher in the Rye", "The Hobbit", "Fahrenheit 451", "Animal Farm", "The Lord of the Rings",
@@ -60,7 +79,7 @@ def create_books(num_books=20):
         author = random.choice(authors)
         publisher = random.choice(publishers)
         edition_date = fake.date_between(start_date='-50y', end_date='today')
-        ISBN = fake.isbn10(separator="-")
+        ISBN = generate_ISBN()
         collection = fake.word()
         pages = random.randint(50, 500)  
         

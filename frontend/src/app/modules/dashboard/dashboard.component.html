@@ -3,7 +3,7 @@
         <header class="w-4/5">
             <div class="flex flex-col items-center justify-center ">
                 <h1>BIBLIOTECA IES ESTEVE TERRADAS I ILLA</h1>
-                <p class="text-white font-semibold">Text de subtítol</p>
+                <!-- <p class="text-white font-semibold">Text de subtítol</p> -->
             </div>
         </header>
     </div>
@@ -100,14 +100,13 @@
         <div class="flex flex-col justify-center items-start w-fit">
             <h2>Estado de la cuenta</h2>
             <div>
-                <p-button severity="dangeroutlined" (onClick)="_profileService.logout()">Tancar sessió</p-button>
+                <p-button severity="dangeroutlined" (onClick)="logout()">Tancar sessió</p-button>
     
                 <hr>
     
                 <div class="flex flex-row items-center gap-x-4">
                     <p-button (click)="cancelChanges()" severity="min">Cancelar</p-button>
-                    <p-button (click)="updatePassword()" severity="min">ActualizarContraseña</p-button>
-                    <p-button (click)="saveChanges()" severity="fill-rounded">Guardar cambios</p-button>
+                    <p-button (click)="saveChanges()" severity="fill-rounded">Guardar canvis</p-button>
                 </div>
             </div>
         </div>

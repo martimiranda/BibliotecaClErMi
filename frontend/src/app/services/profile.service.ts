@@ -25,7 +25,7 @@ export class ProfileService {
     async getSelfProfileData() {
         try {
             const response: any = await firstValueFrom(
-                this.http.get(`${this.baseUrl}/user/userDetails`, {
+                this.http.get(`${this.baseUrl}/user/userDetails/`, {
                     observe: 'response',
                 }),
             );
@@ -58,6 +58,8 @@ export class ProfileService {
     async updateProfile(data: any) {
         try {
             const response: any = await firstValueFrom(this.http.post(`${this.baseUrl}/user/update/`, { data: data }));
+            console.log('ProfileService | updateProfile - response -> ', response);
+
             return response;
         } catch (error: any) {
             console.error('Error updating profile data', error);

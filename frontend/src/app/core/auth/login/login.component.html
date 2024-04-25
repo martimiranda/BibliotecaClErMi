@@ -27,6 +27,9 @@
                     </span>
                 </div>
             </div>
+
+            <p class="forgottenPwd" (click)="togglePopup()">Has oblidat la contrasenya?</p>
+
             <p-button
                 label="Següent"
                 styleClass="p-button-rounded"
@@ -44,3 +47,21 @@
         </div>
     </div>
 </div>
+
+<p-dialog [(visible)]="popupVisible" [modal]="true" [style]="{ width: '20%' }" [draggable]="false" [resizable]="false">
+    <div class="popup-container">
+        <div class="forgottenPwdContainer gap-y-4">
+            <p class="closePopUp" (click)="togglePopup()">X</p>
+            <i class="pi pi-envelope"></i>
+            <h3>T'hem enviat un correu</h3>
+            <p>Introduïu els cinc dígits indicats al vostre correu. Si no el trobes, revisa a la safata de Spam o espera per poder-lo reenviar.</p>
+            
+            <div class="card flex justify-content-center">
+                <p-inputOtp [(ngModel)]="value"></p-inputOtp>
+            </div>
+
+            <p-button severity="fill">Següent</p-button>
+            <p class="forgottenPwd">Reenviar codi en 20 segons</p>
+        </div>
+    </div>
+</p-dialog>
